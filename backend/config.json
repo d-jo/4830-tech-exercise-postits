@@ -1,0 +1,12 @@
+{
+  "host": "localhost",
+  "port": "7000",
+  "db_host": "localhost",
+  "db_port": "3306",
+  "db_name": "postit",
+  "sql": {
+    "create_postit_table": "CREATE TABLE IF NOT EXISTS PostIts (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, author TEXT, content TEXT)",
+    "insert_postit": "INSERT INTO PostIts (author, content) VALUES (?, ?)",
+    "select_latest_postits": "SELECT * FROM PostIts ORDER BY id DESC LIMIT 10"
+  }
+}
