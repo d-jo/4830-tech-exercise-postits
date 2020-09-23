@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 )
@@ -15,11 +14,14 @@ var Creds = CredsStruct{}
 
 // ReadConfigFiles reads and parses the config.json and creds.json files and stores them in state
 func ReadConfigFiles() {
+	// Read config file
 	f, err := ioutil.ReadFile("config.json")
 	if err != nil {
 		panic(err)
 	}
 
+	// json Unmarshal loads a byte sequence into a struct
+	// using the json indications in the definition
 	_ = json.Unmarshal([]byte(f), &Config)
 
 	f, err = ioutil.ReadFile("creds.json")
@@ -34,32 +36,50 @@ func ReadConfigFiles() {
 // reads the form values and calls InsertPostIt to
 // add it to the database
 func insertHandler(w http.ResponseWriter, r *http.Request) {
+	// Check if post
 	if r.Method == "POST" {
+		// Parse the form
+		r.ParseForm()
+		// get the author and content
 		author := r.Form["author"][0]
 		content := r.Form["content"][0]
 
+		// call insert in db.go
 		InsertPostIt(author, content)
 	}
 }
 
+// selectHandler handles the /latest endpoint
 func selectHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("start select")
+	// call the method in db.go to select
+	// the latest postits
 	posts := SelectFrontPagePostIts()
-	fmt.Println("end select")
+	// convert the results to a json string
 	js, err := json.Marshal(posts)
 	if err != nil {
 		panic(err.Error())
 	}
+	// set the content type to json so the client
+	// knows what to expect
 	w.Header().Set("Content-Type", "application/json")
+	// this is needed for development because requests
+	// are crossorigin between frontend and backend,
+	// this should be removed/disabled in production
 	w.Header().Set("Access-Control-Allow-Origin", "*")
+	// write the json to the response writer
 	w.Write(js)
 }
 
 func main() {
+	// read the config files
 	ReadConfigFiles()
+	// initialize the database
 	Init(Creds.DBUser, Creds.DBPass, Config.DBHost, Config.DBPort, Config.DBName)
+	// create the table if not exists
 	CreateTable()
+	// set handlers for insert and latest
 	http.HandleFunc("/insert", insertHandler)
 	http.HandleFunc("/latest", selectHandler)
+	// listen on port 7000
 	http.ListenAndServe(":7000", nil)
 }
