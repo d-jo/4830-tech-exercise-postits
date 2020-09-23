@@ -9,8 +9,14 @@ class App extends Component {
     this.state = {
       error: null,
       isLoaded: false,
-      postits: []
+      postits: [],
+      author: "",
+      content: ""
     }
+
+    this.handleChangeAuthor = this.handleChangeAuthor.bind(this);
+    this.handleChangeContent = this.handleChangeContent.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -18,6 +24,7 @@ class App extends Component {
       .then(res => res.json())
       .then(
         (result) => {
+        console.log(result)
         this.setState({
           isLoaded: true,
           postits: result
@@ -29,6 +36,44 @@ class App extends Component {
           error
         })
       })
+  }
+
+  handleChangeAuthor(event) {
+    this.setState({author: event.target.value})
+  }
+
+  handleChangeContent(event) {
+    this.setState({content: event.target.value})
+  }
+
+  handleSubmit(event) {
+    event.preventDefault()
+    console.log('going')
+    fetch("http://localhost:3000/insert", {
+      method: "POST",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({author: this.state.author, content: this.state.content})
+    }).then(() => {
+      fetch("http://localhost:7000/latest")
+      .then(res => res.json())
+      .then(
+        (result) => {
+        console.log(result)
+        this.setState({
+          isLoaded: true,
+          postits: result
+        })
+      },
+      (error) => {
+        this.setState({
+          isLoaded: true,
+          error
+        })
+      })
+    })
   }
 
   render() {
@@ -44,6 +89,13 @@ class App extends Component {
             <h2>PostIts</h2>
           </div>
           <div className="App-content">
+            <div class="postit_input_container">
+              <form onSubmit={this.handleSubmit}>
+                <input onChange={this.handleChangeAuthor} value={this.state.author} type="text" id="author" name="author"/>
+                <textarea onChange={this.handleChangeContent} value={this.state.content} type="text" id="content" name="content"/>
+                <button type="submit">Submit</button>
+              </form>
+            </div>
             {postits.map(pt => (
               <div className="postit-container">
                 <div className="postit-header">{pt.ID} - {pt.Author}</div>

@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 )
@@ -37,15 +38,20 @@ func ReadConfigFiles() {
 // add it to the database
 func insertHandler(w http.ResponseWriter, r *http.Request) {
 	// Check if post
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	if r.Method == "POST" {
+		fmt.Println("posting")
 		// Parse the form
-		r.ParseForm()
+		postit := PostIt{}
+		err := json.NewDecoder(r.Body).Decode(&postit)
+		if err != nil {
+			fmt.Println(err)
+		}
 		// get the author and content
-		author := r.Form["author"][0]
-		content := r.Form["content"][0]
+		//json.Unmarshal([]byte(json_str), &postit)
 
 		// call insert in db.go
-		InsertPostIt(author, content)
+		InsertPostIt(postit.Author, postit.Content)
 	}
 }
 

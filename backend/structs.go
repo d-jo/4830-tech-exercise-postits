@@ -6,8 +6,8 @@ package main
 //		Content: What is it
 type PostIt struct {
 	ID      int
-	Author  string
-	Content string
+	Author  string `json:"Author"`
+	Content string `json:"Content"`
 }
 
 // ConfigStruct has the config and sql values for the application
