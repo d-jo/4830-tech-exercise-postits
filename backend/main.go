@@ -30,11 +30,16 @@ func ReadConfigFiles() {
 	_ = json.Unmarshal([]byte(f), &Creds)
 }
 
+// handles requests to the /insert endpoint.
+// reads the form values and calls InsertPostIt to
+// add it to the database
 func insertHandler(w http.ResponseWriter, r *http.Request) {
-	author := r.Form["author"][0]
-	content := r.Form["content"][0]
+	if r.Method == "POST" {
+		author := r.Form["author"][0]
+		content := r.Form["content"][0]
 
-	InsertPostIt(author, content)
+		InsertPostIt(author, content)
+	}
 }
 
 func selectHandler(w http.ResponseWriter, r *http.Request) {
