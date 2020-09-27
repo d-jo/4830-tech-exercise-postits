@@ -76,6 +76,14 @@ func selectHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(js)
 }
 
+func indexHandler(w http.ResponseWriter, r *http.Request) {
+	d, err := ioutil.ReadFile("./index.html")
+	if err != nil {
+		http.Error(w, "no index file", 418)
+	}
+	w.Write(d)
+}
+
 func main() {
 	// read the config files
 	ReadConfigFiles()
@@ -86,6 +94,8 @@ func main() {
 	// set handlers for insert and latest
 	http.HandleFunc("/insert", insertHandler)
 	http.HandleFunc("/latest", selectHandler)
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./static"))))
+	http.HandleFunc("/", indexHandler)
 	// listen on port 7000
 	http.ListenAndServe(":7000", nil)
 }

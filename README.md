@@ -2,6 +2,9 @@
 
 PostIts is a simple application for creating notes. The last 10 notes are displayed at any time and users can add notes using the form input.
 
+# How to run
+For frontend, `cd`
+
 # Stack/Source Map
 ## Backend
 `backend/*` contains backend Golang code

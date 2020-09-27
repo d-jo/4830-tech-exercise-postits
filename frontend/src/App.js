@@ -20,7 +20,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:7000/latest")
+    fetch("/latest")
       .then(res => res.json())
       .then(
         (result) => {
@@ -49,7 +49,7 @@ class App extends Component {
   handleSubmit(event) {
     event.preventDefault()
     console.log('going')
-    fetch("http://localhost:3000/insert", {
+    fetch("/insert", {
       method: "POST",
       headers: {
         "Accept": "application/json",
@@ -57,7 +57,7 @@ class App extends Component {
       },
       body: JSON.stringify({author: this.state.author, content: this.state.content})
     }).then(() => {
-      fetch("http://localhost:7000/latest")
+      fetch("/latest")
       .then(res => res.json())
       .then(
         (result) => {
@@ -91,9 +91,9 @@ class App extends Component {
           <div className="App-content">
             <div class="postit_input_container">
               <form onSubmit={this.handleSubmit}>
-                <input onChange={this.handleChangeAuthor} value={this.state.author} type="text" id="author" name="author"/>
-                <textarea onChange={this.handleChangeContent} value={this.state.content} type="text" id="content" name="content"/>
-                <button type="submit">Submit</button>
+                <input onChange={this.handleChangeAuthor} value={this.state.author} type="text" id="author" name="author" class="cent"/>
+                <textarea onChange={this.handleChangeContent} value={this.state.content} type="text" id="content" name="content" class="cent"/>
+                <button type="submit" class="cent">Submit</button>
               </form>
             </div>
             {postits.map(pt => (
