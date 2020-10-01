@@ -39,16 +39,16 @@ class App extends Component {
   }
 
   handleChangeAuthor(event) {
-    this.setState({author: event.target.value})
+    this.setState({author: event.target.value});
   }
 
   handleChangeContent(event) {
-    this.setState({content: event.target.value})
+    this.setState({content: event.target.value});
   }
 
   handleSubmit(event) {
-    event.preventDefault()
-    console.log('going')
+    event.preventDefault();
+    console.log('going');
     fetch("/insert", {
       method: "POST",
       headers: {
@@ -70,7 +70,7 @@ class App extends Component {
       (error) => {
         this.setState({
           isLoaded: true,
-          error
+          error: error
         })
       })
     })
@@ -89,11 +89,11 @@ class App extends Component {
             <h2>PostIts</h2>
           </div>
           <div className="App-content">
-            <div class="postit_input_container">
+            <div className="postit_input_container">
               <form onSubmit={this.handleSubmit}>
-                <input onChange={this.handleChangeAuthor} value={this.state.author} type="text" id="author" name="author" class="cent"/>
-                <textarea onChange={this.handleChangeContent} value={this.state.content} type="text" id="content" name="content" class="cent"/>
-                <button type="submit" class="cent">Submit</button>
+                <input onChange={this.handleChangeAuthor} value={this.state.author} type="text" id="author" name="author" className="cent"/>
+                <textarea onChange={this.handleChangeContent} value={this.state.content} type="text" id="content" name="content" className="cent"/>
+                <button type="submit" className="cent">Submit</button>
               </form>
             </div>
             {postits.map(pt => (
