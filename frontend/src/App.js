@@ -70,7 +70,7 @@ class App extends Component {
       (error) => {
         this.setState({
           isLoaded: true,
-          error: error
+          error 
         })
       })
     })
