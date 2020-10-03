@@ -6,6 +6,7 @@ import './App.css';
 class App extends Component {
   constructor(props) {
     super(props);
+    console.log("flag1")
     this.state = {
       error: null,
       isLoaded: false,
@@ -13,13 +14,16 @@ class App extends Component {
       author: "",
       content: ""
     }
+    console.log("flag2")
 
     this.handleChangeAuthor = this.handleChangeAuthor.bind(this);
     this.handleChangeContent = this.handleChangeContent.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    console.log("flag3")
   }
 
   componentDidMount() {
+    console.log("flag4")
     fetch("/latest")
       .then(res => res.json())
       .then(
@@ -77,16 +81,22 @@ class App extends Component {
   }
 
   render() {
+
+
+    console.log("flag5")
     const  {error, isLoaded, postits} = this.state;
     if (error) {
+      console.log("flag6")
       return <div>Error! {error.message}</div>
     } else if (!isLoaded) {
+      console.log("flag7")
       return <div>Loading...</div>
     } else {
+      console.log("flag8")
       return (
         <div className="App">
           <div className="App-header">
-            <h2>PostIts</h2>
+            <h2>PostIts asdf</h2>
           </div>
           <div className="App-content">
             <div className="postit_input_container">
