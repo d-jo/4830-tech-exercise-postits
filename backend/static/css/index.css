@@ -5,6 +5,7 @@
   margin: 10px auto;
   padding: 5px 30px 100px 30px;
   background-color: rgb(255, 233, 172);
+  overflow: auto;
 }
 
 .postit-header {
