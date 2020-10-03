@@ -29,14 +29,16 @@ function loadNotes() {
       console.log("Recieved data from server")
       console.log(data)
       for (let i = 0; i < data.length; i++) {
-        console.log(data[i])
-        let wrap = $("<div class='postit-container'></div>")  
-        let head = $("<div class='postit-header'></div>")
-        let cont = $("<div class='postit-content'></div>").text(data[i]["Content"])
-        let ele = $("<h3></h3>").text("[" + data[i]['ID'] + "] " + data[i]["Author"])
-        head = head.append(ele)
-        wrap = wrap.append(head, cont)
-        $(".postits").append(wrap)
+        console.log(data[i]);
+        let wrap = $("<div class='postit-container'></div>");  
+        let head = $("<div class='postit-header'></div>");
+        let cont = $("<div class='postit-content'></div>");
+        let text = $("<p></p>").text(data[i]["Content"]);
+        cont = cont.append(text);
+        let ele = $("<h3></h3>").text("[" + data[i]['ID'] + "] " + data[i]["Author"]);
+        head = head.append(ele);
+        wrap = wrap.append(head, cont);
+        $(".postits").append(wrap);
       }
     },
     error: (err) => {
