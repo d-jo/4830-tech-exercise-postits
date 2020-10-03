@@ -1,6 +1,7 @@
 .postit-container {
   width: 80%;
-  height: 8%;
+  height: 14%;
+  border: 1px black solid;
   margin: 10px auto;
   padding: 50px;
   background-color: rgb(255, 233, 172);
