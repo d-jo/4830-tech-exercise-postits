@@ -13,7 +13,7 @@ PostIts is a simple application for creating notes. The last 10 notes are displa
 
 `./main.go` contains the main file for the server.
 
-`./structs.go` contains the tpye structs defined for the server
+`./structs.go` contains the type structs defined for the server
 
 `./db.go` contains relevant MySql DB code for connecting and accessing the DB
 
