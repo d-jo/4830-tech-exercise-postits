@@ -10,6 +10,10 @@ type PostIt struct {
 	Content string `json:"Content"`
 }
 
+type SearchStruct struct {
+	Keyword string `json:"Keyword"`
+}
+
 // ConfigStruct has the config and sql values for the application
 type ConfigStruct struct {
 	Host   string            `json:"host"`

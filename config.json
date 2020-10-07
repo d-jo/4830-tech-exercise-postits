@@ -7,6 +7,7 @@
   "sql": {
     "create_postit_table": "CREATE TABLE IF NOT EXISTS PostIts (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, author TEXT, content TEXT)",
     "insert_postit": "INSERT INTO PostIts (author, content) VALUES (?, ?)",
-    "select_latest_postits": "SELECT * FROM PostIts ORDER BY id DESC LIMIT 10"
+    "select_latest_postits": "SELECT * FROM PostIts ORDER BY id DESC LIMIT 10",
+    "search_postits": "SELECT * FROM PostIts WHERE (author LIKE ?) OR (content LIKE ?) ORDER BY id DESC"
   }
 }

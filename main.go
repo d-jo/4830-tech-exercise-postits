@@ -84,6 +84,35 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(d)
 }
 
+func searchHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "POST" {
+		searchStruct := SearchStruct{}
+		err := json.NewDecoder(r.Body).Decode(&searchStruct)
+		if err != nil {
+			fmt.Println(err)
+		}
+		keyword := searchStruct.Keyword
+		keyword = "%" + keyword + "%"
+		fmt.Println(keyword)
+		posts := SearchPostits(keyword)
+		fmt.Println(posts)
+		js, err := json.Marshal(posts)
+		if err != nil {
+			panic(err.Error())
+		}
+		// set the content type to json so the client
+		// knows what to expect
+		w.Header().Set("Content-Type", "application/json")
+		// this is needed for development because requests
+		// are crossorigin between frontend and backend,
+		// this should be removed/disabled in production
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		// write the json to the response writer
+		w.Write(js)
+	}
+
+}
+
 func main() {
 	// read the config files
 	ReadConfigFiles()
@@ -94,6 +123,7 @@ func main() {
 	// set handlers for insert and latest
 	http.HandleFunc("/insert", insertHandler)
 	http.HandleFunc("/latest", selectHandler)
+	http.HandleFunc("/search", searchHandler)
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./static"))))
 	http.HandleFunc("/", indexHandler)
 	// listen on port 7000
